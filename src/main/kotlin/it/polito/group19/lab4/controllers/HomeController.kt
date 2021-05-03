@@ -17,6 +17,7 @@ class HomeController {
             Product(1, "Lentils", "Legums", 1F, 1)
         )
             .log()
+            .doOnNext { println(it.toString()) }
             .map { Product(it.id, it.name, it.category, it.price + 0.5F, it.quantity) }
     }
 }
