@@ -4,9 +4,9 @@ import it.polito.group19.lab4.dtos.ProductDTO
 
 interface ProductService {
 
-    fun addProduct(productDTO : ProductDTO)
+    suspend fun addProduct(productDTO : ProductDTO): Long
 
-    fun addQuantity(productId: Long, quantity: Long)
+    suspend fun updateQuantity(productId: Long, quantityToAdd: Long)
 
     fun getProductById(productId: Long): ProductDTO
 

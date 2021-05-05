@@ -6,6 +6,6 @@ data class Product(
     @Id val id: Long?,
     val name: String,
     val category: String,
-    val price: Float,
-    val quantity: Long
+    var price: Float,
+    var quantity: Long
 )
