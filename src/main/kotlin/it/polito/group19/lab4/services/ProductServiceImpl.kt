@@ -2,6 +2,8 @@ package it.polito.group19.lab4.services
 
 import it.polito.group19.lab4.dtos.ProductDTO
 import it.polito.group19.lab4.repositories.ProductRepository
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
@@ -21,15 +23,23 @@ class ProductServiceImpl(val productRepository: ProductRepository): ProductServi
         productRepository.save(product)
     }
 
-    override fun getProductById(productId: Long): ProductDTO {
-        TODO("Not yet implemented")
+    override suspend fun getProductById(productId: Long): ProductDTO {
+        val product = productRepository.findById(productId) ?: throw ResponseStatusException(
+                                                        HttpStatus.NOT_FOUND,
+                                                        "The product with id $productId doesn't exist..."
+                                                    )
+        return product.toDTO()
     }
 
-    override fun getAllProducts(): List<ProductDTO> {
-        TODO("Not yet implemented")
+    override suspend fun getAllProducts(): List<ProductDTO> {
+        return productRepository.findAll()
+                                .map { it.toDTO() }
+                                .toList()
     }
 
-    override fun getProductsByCategory(category: String): List<ProductDTO> {
-        TODO("Not yet implemented")
+    override suspend fun getProductsByCategory(category: String): List<ProductDTO> {
+        return productRepository.findProductsByCategory(category)
+                                .map { it.toDTO() }
+                                .toList()
     }
 }

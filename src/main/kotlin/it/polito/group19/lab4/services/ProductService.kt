@@ -8,10 +8,10 @@ interface ProductService {
 
     suspend fun updateQuantity(productId: Long, quantityToAdd: Long)
 
-    fun getProductById(productId: Long): ProductDTO
+    suspend fun getProductById(productId: Long): ProductDTO
 
-    fun getAllProducts(): List<ProductDTO>
+    suspend fun getAllProducts(): List<ProductDTO>
 
-    fun getProductsByCategory(category: String): List<ProductDTO>
+    suspend fun getProductsByCategory(category: String): List<ProductDTO>
 
 }
