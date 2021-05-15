@@ -10,5 +10,8 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ProductRepository: CoroutineCrudRepository<Product, Long> {
 
+    @Query("SELECT * FROM product")
+    suspend fun myfindAll(): Flow<Product>
+
     fun findProductsByCategory(category: String): Flow<Product>
 }

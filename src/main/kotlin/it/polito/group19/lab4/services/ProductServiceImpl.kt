@@ -2,6 +2,8 @@ package it.polito.group19.lab4.services
 
 import it.polito.group19.lab4.dtos.ProductDTO
 import it.polito.group19.lab4.repositories.ProductRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import org.springframework.http.HttpStatus
@@ -12,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException
 class ProductServiceImpl(val productRepository: ProductRepository): ProductService {
 
     override suspend fun addProduct(productDTO: ProductDTO): Long {
-        return productRepository.save(productDTO.toEntity()).id!!
+        return productRepository.save(productDTO.toEntity()).pid!!
     }
 
     override suspend fun updateQuantity(productId: Long, quantityToAdd: Long) {
@@ -31,10 +33,8 @@ class ProductServiceImpl(val productRepository: ProductRepository): ProductServi
         return product.toDTO()
     }
 
-    override suspend fun getAllProducts(): List<ProductDTO> {
-        return productRepository.findAll()
-                                .map { it.toDTO() }
-                                .toList()
+    override suspend fun getAllProducts(): Flow<ProductDTO> {
+        return productRepository.findAll().map { it.toDTO() }
     }
 
     override suspend fun getProductsByCategory(category: String): List<ProductDTO> {

@@ -4,14 +4,14 @@ import it.polito.group19.lab4.dtos.ProductDTO
 import org.springframework.data.annotation.Id
 
 data class Product(
-    @Id val id: Long?,
+    @Id val pid: Long?,
     val name: String,
     val category: String,
     var price: Float,
     var quantity: Long
 ){
     fun toDTO() = ProductDTO(
-            id = this.id!!,
+            id = this.pid,
             name = this.name,
             category = this.category,
             price = this.price,
